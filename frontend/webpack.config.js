@@ -12,15 +12,24 @@ var config = {
             {
                test: /\.jsx?$/, // search for js files 
                exclude: /node_modules/,
-               loader: 'babel-loader',
-   query: {
+               loader: 'babel-loader',//'class-to-classname'
+                  query: {
                presets: ['es2015', 'react'] // use es2015 and react
-            }
+                  }
          },
          {
             test: /\.scss$/,
-            loaders: ['style-loader', 'css-loader?-url', 'postcss-loader', 'sass-loader']
+            loaders: ['style-loader', 'css-loader?-url', 'sass-loader']
         },
+        {
+            test: /\.css$/,
+            loaders: ['style-loader', 'css-loader?-url']
+        },
+        {
+			test: /\.jsx?$/,
+			exclude: /node_modules/,
+			loader: "class-to-classname"
+		}
       ]
    }
 }
