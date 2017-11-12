@@ -1,5 +1,5 @@
 var config = {
-   entry: './main.js', // entry point
+   entry: './main.jsx', // entry point
    output: {
          filename: 'index.js', // place where bundled app will be served
       },
@@ -16,7 +16,11 @@ var config = {
    query: {
                presets: ['es2015', 'react'] // use es2015 and react
             }
-         }
+         },
+         {
+            test: /\.scss$/,
+            loaders: ['style-loader', 'css-loader?-url', 'postcss-loader', 'sass-loader']
+        },
       ]
    }
 }
