@@ -6,33 +6,30 @@ class Planner extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      days: 1,
       days_largest: 0,
-      days_plan: [<DaysComponents key={0} number={0} deletefunc={(index) => this.remove_day(index)} />],
+      days_plan: [{ days_key: 0 }],
     };
   }
 
   addDays() {
     let temp = this.state.days_plan.slice();
-    temp.push(
-      <DaysComponents key={this.state.days_largest + 1} number={this.state.days_largest + 1} deletefunc={(index) => this.remove_day(index)} />
-    );
+    temp.push({ days_key: this.state.days_largest + 1 });
     this.setState({
       days_largest: this.state.days_largest + 1,
       days_plan: temp,
     }, () => {
-
     })
     //TODO Insert API
   }
 
   remove_day(index) {
     let temp = this.state.days_plan.slice();
-    temp = temp.filter((val) => {return val.props.number != index });
+    console.log(temp);
+    temp = temp.filter((val) => { console.log(val.days_key); console.log(index); return val.days_key != index });
+    console.log(temp);
     this.setState({
       days_plan: temp,
     }, () => {
-      // this.renderDays();
     })
     //TODO Remove API
   }
@@ -46,9 +43,7 @@ class Planner extends React.Component {
       <div class="ui raised segments">
         {this.state.days_plan.map((val, ind) => {
           return (
-            <div class="ui segment">Day {ind}
-              {val}
-            </div>
+            <DaysComponents key={this.state.days_plan[ind].days_key} number={this.state.days_plan[ind].days_key} day_index={ind} deletefunc={(index) => this.remove_day(index)} />
           )
         })}
         <div class="ui segment">
@@ -65,24 +60,33 @@ class Planner extends React.Component {
 class DaysComponents extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      day: ' ',
+    }
+    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
 
   onClickHandler() {
-    console.log(Math.random() * 1000);
     this.props.deletefunc(this.props.number);
   }
 
-  onChangeHandler(){
-    //TODO Update API
+  onChangeHandler(event) {
+    this.setState({
+      day: event.target.value,
+    }, () => {
+      console.log(this.state.day);
+    })
   }
-
 
   render() {
     return (
-      <div class="ui input">
-        <input type="text" onChange={()=>this.onChangeHandler()}/>
-        <button class="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
+      <div class="ui segment">Day {this.props.day_index + 1}
+        <div class="ui input">
+          <input type="text" value={this.state.day} onChange={this.onChangeHandler} />
+          <button class="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
+        </div>
       </div>
+
     );
   }
 }

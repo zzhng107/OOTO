@@ -1,24 +1,25 @@
-.ui.input{
-    margin-left: 5%;
-}
-
 .ui.raised.segments{
-    position: relative;
+    position: absolute;
     top: 1%;
     width: 96%;
     margin: 2%;
 }
 
+.ui.input{
+    margin-left: 5%;
+}
+
 .ui.circular.button{
     position: relative;
     left: 5%;
+    // float: right;
 }
 
-#control_button{
-    position: relative;
-}
+// #control_button{
+//     // position: relative;
+// }
 
 #control_button button{
     position: relative;
-    left: 40%;
+    left: 55%;
 }
