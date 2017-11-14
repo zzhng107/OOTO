@@ -8,7 +8,7 @@ from django.http import HttpResponse
 
 
 def index(request):
-    with open("/home/txu25/project/frontend/index.html") as f:
+    with open("/root/OOTO/frontend/index.html") as f:
         html = f.read()
     return HttpResponse(html)
     return HttpResponse("Hello, world. You're at the polls index.")
