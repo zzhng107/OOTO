@@ -25,7 +25,8 @@ SECRET_KEY = '16f*$#=-e0@y^9e$hf$t600)1h^dd_d0(%oyqe@0xqp#c5r)vy'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -37,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'index',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -81,6 +84,7 @@ DATABASES = {
         'PASSWORD': '123456OOTOUser!',
         'HOST': 'localhost',
         'PORT': '',
+        'OPTIONS': {'unix_socket': '/OOTODB/mysql/mysql.sock', }
     }
 }
 
@@ -121,4 +125,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/frontend/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'frontend'),
+)

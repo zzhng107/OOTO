@@ -10,10 +10,6 @@ class App extends React.Component {
             <div id='planner'>
                 <Planner/>
             </div>
-
-            {/* <div id='map'>
-                <Gmap/>
-            </div> */}
          </div>
       );
    }
