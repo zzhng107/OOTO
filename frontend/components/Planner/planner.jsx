@@ -12,21 +12,9 @@ class Planner extends React.Component {
     };
   }
 
-  // renderDays() {
-  //   let days_plan_ = [];
-  //   for (let i = 1; i <= this.state.days; i++) {
-  //     days_plan_.push(<DaysComponents key={days_largest+1} number={days_largest+1} deletefunc={(index) => this.remove_day(index)} />);
-  //   }
-  //   this.setState({
-  //     days_largest: this.state.days_largest+1,
-  //     days_plan: days_plan_,
-  //   })
-  // }
-
   addDays() {
     let temp = this.state.days_plan.slice();
     temp.push(
-
       <DaysComponents key={this.state.days_largest + 1} number={this.state.days_largest + 1} deletefunc={(index) => this.remove_day(index)} />
     );
     this.setState({
@@ -35,20 +23,22 @@ class Planner extends React.Component {
     }, () => {
 
     })
+    //TODO Insert API
   }
 
   remove_day(index) {
     let temp = this.state.days_plan.slice();
-    temp = temp.filter((val) => { console.log(val); return val.props.number != index });
+    temp = temp.filter((val) => {return val.props.number != index });
     this.setState({
       days_plan: temp,
     }, () => {
       // this.renderDays();
     })
+    //TODO Remove API
   }
 
   componentDidMount() {
-    // this.renderDays();
+
   }
 
   render() {
@@ -82,10 +72,15 @@ class DaysComponents extends React.Component {
     this.props.deletefunc(this.props.number);
   }
 
+  onChangeHandler(){
+    //TODO Update API
+  }
+
+
   render() {
     return (
       <div class="ui input">
-        <input type="text" />
+        <input type="text" onChange={()=>this.onChangeHandler()}/>
         <button class="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
       </div>
     );
