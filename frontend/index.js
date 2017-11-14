@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7b12ada92957d5d6fcd9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f8af2d83bb12f03a459f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1591,7 +1591,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".ui.input {\n  margin-left: 10%; }\n\n.ui.raised.segments {\n  margin: 2%; }\n", ""]);
+exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  top: 1%;\n  width: 96%;\n  margin: 2%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  left: 55%; }\n", ""]);
 
 // exports
 
@@ -2159,7 +2159,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, "#planner {\n  position: fixed;\n  background-color: black;\n  width: 18%;\n  height: 100%; }\n", ""]);
+exports.push([module.i, "#planner {\n  position: fixed;\n  background-color: black;\n  width: 22%;\n  height: 100%; }\n", ""]);
 
 // exports
 
@@ -29360,46 +29360,77 @@ var axios = __webpack_require__(70);
 var Planner = function (_React$Component) {
   _inherits(Planner, _React$Component);
 
-  function Planner() {
+  function Planner(props) {
     _classCallCheck(this, Planner);
 
-    return _possibleConstructorReturn(this, (Planner.__proto__ || Object.getPrototypeOf(Planner)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Planner.__proto__ || Object.getPrototypeOf(Planner)).call(this, props));
+
+    _this.state = {
+      days_largest: 0,
+      days_plan: [{ days_key: 0 }]
+    };
+    return _this;
   }
 
   _createClass(Planner, [{
+    key: 'addDays',
+    value: function addDays() {
+      var temp = this.state.days_plan.slice();
+      temp.push({ days_key: this.state.days_largest + 1 });
+      this.setState({
+        days_largest: this.state.days_largest + 1,
+        days_plan: temp
+      }, function () {});
+      //TODO Insert API
+    }
+  }, {
+    key: 'remove_day',
+    value: function remove_day(index) {
+      var temp = this.state.days_plan.slice();
+      // console.log(temp);
+      temp = temp.filter(function (val) {
+        return val.days_key != index;
+      });
+      // console.log(temp);
+      this.setState({
+        days_plan: temp
+      }, function () {});
+      //TODO Remove API
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {}
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return _react2.default.createElement(
         'div',
         { className: 'ui raised segments' },
+        this.state.days_plan.map(function (val, ind) {
+          return _react2.default.createElement(DaysComponents, { key: _this2.state.days_plan[ind].days_key, number: _this2.state.days_plan[ind].days_key, day_index: ind, deletefunc: function deletefunc(index) {
+              return _this2.remove_day(index);
+            } });
+        }),
         _react2.default.createElement(
           'div',
           { className: 'ui segment' },
-          'Day 1',
           _react2.default.createElement(
             'div',
-            { className: 'ui input' },
-            _react2.default.createElement('input', { type: 'text', placeholder: 'Search...' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'ui segment' },
-          'Day 2',
-          _react2.default.createElement(
-            'div',
-            { className: 'ui input' },
-            _react2.default.createElement('input', { type: 'text', placeholder: 'Search...' })
-          )
-        ),
-        _react2.default.createElement(
-          'div',
-          { className: 'ui segment' },
-          'Day 3',
-          _react2.default.createElement(
-            'div',
-            { className: 'ui input' },
-            _react2.default.createElement('input', { type: 'text', placeholder: 'Search...' })
+            { id: 'control_button' },
+            _react2.default.createElement(
+              'button',
+              { className: 'ui grey button', role: 'button', onClick: function onClick() {
+                  return _this2.addDays();
+                } },
+              ' + '
+            ),
+            _react2.default.createElement(
+              'button',
+              { className: 'ui primary button', role: 'button' },
+              ' Save '
+            )
           )
         )
       );
@@ -29407,6 +29438,66 @@ var Planner = function (_React$Component) {
   }]);
 
   return Planner;
+}(_react2.default.Component);
+
+var DaysComponents = function (_React$Component2) {
+  _inherits(DaysComponents, _React$Component2);
+
+  function DaysComponents(props) {
+    _classCallCheck(this, DaysComponents);
+
+    var _this3 = _possibleConstructorReturn(this, (DaysComponents.__proto__ || Object.getPrototypeOf(DaysComponents)).call(this, props));
+
+    _this3.state = {
+      day: ' '
+    };
+    _this3.onChangeHandler = _this3.onChangeHandler.bind(_this3);
+    return _this3;
+  }
+
+  _createClass(DaysComponents, [{
+    key: 'onClickHandler',
+    value: function onClickHandler() {
+      this.props.deletefunc(this.props.number);
+    }
+  }, {
+    key: 'onChangeHandler',
+    value: function onChangeHandler(event) {
+      var _this4 = this;
+
+      this.setState({
+        day: event.target.value
+      }, function () {
+        console.log(_this4.state.day);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this5 = this;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'ui segment' },
+        'Day ',
+        this.props.day_index + 1,
+        _react2.default.createElement(
+          'div',
+          { className: 'ui input' },
+          _react2.default.createElement('input', { type: 'text', value: this.state.day, onChange: this.onChangeHandler }),
+          _react2.default.createElement(
+            'button',
+            { className: 'ui mini circular button', role: 'button', onClick: function onClick() {
+                return _this5.onClickHandler();
+              } },
+            ' - '
+          )
+        )
+      );
+    }
+  }]);
+
+  return DaysComponents;
 }(_react2.default.Component);
 
 exports.default = Planner;
