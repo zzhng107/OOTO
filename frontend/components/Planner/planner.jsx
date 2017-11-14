@@ -24,9 +24,9 @@ class Planner extends React.Component {
 
   remove_day(index) {
     let temp = this.state.days_plan.slice();
-    console.log(temp);
-    temp = temp.filter((val) => { console.log(val.days_key); console.log(index); return val.days_key != index });
-    console.log(temp);
+    // console.log(temp);
+    temp = temp.filter((val) => {return val.days_key != index });
+    // console.log(temp);
     this.setState({
       days_plan: temp,
     }, () => {
