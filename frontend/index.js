@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "145ac6f5947915b16fd3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "67b0f0f7d8a8f0f0bbff"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29426,9 +29426,10 @@ var Planner = function (_React$Component) {
         // let response_ = '[{days_key: 1, days_text: "hello"}]';
         // let temp = JSON.parse(response_);
         var temp = response;
+        console.log(response);
         _this3.setState({
           days_plan: temp,
-          days_largest: temp[temp.length - 1].days_key
+          days_largest: temp[temp.length - 1].tripId
         });
       });
     }

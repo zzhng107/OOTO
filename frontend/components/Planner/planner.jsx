@@ -61,9 +61,10 @@ class Planner extends React.Component {
       // let response_ = '[{days_key: 1, days_text: "hello"}]';
       // let temp = JSON.parse(response_);
       let temp = response;
+      console.log(response);
       this.setState({
         days_plan: temp,
-        days_largest: temp[temp.length-1].days_key,
+        days_largest: temp[temp.length-1].tripId,
       })
     })
   }
