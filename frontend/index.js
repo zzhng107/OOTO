@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "54d9a4f3f8a4149998ae"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2f2b91c9421b1333459a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29414,7 +29414,7 @@ var Planner = function (_React$Component) {
       this.setState({
         days_plan: temp
       }, function () {
-        axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/delete/?userId=admin&tripId=' + index + '&business_name=' + oneplan);
+        axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/update/?userId=admin&tripId=' + index + '&business_name=' + oneplan);
       });
     }
   }, {
