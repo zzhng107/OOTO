@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "67b0f0f7d8a8f0f0bbff"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b32c119d037aa172751f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29425,7 +29425,7 @@ var Planner = function (_React$Component) {
       axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
         // let response_ = '[{days_key: 1, days_text: "hello"}]';
         // let temp = JSON.parse(response_);
-        var temp = response;
+        var temp = response.data;
         console.log(response);
         _this3.setState({
           days_plan: temp,
