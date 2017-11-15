@@ -7,17 +7,20 @@ class Planner extends React.Component {
     super(props);
     this.state = {
       days_largest: 0,
-      days_plan: [{ days_key: 0 }],
+      days_plan: [],
     };
   }
 
   addDays() {
     let temp = this.state.days_plan.slice();
-    temp.push({ days_key: this.state.days_largest + 1 });
+    temp.push({ days_key: this.state.days_largest + 1, days_text: ""});
     this.setState({
       days_largest: this.state.days_largest + 1,
       days_plan: temp,
     }, () => {
+      axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/insert/?userId=admin&tripId=${this.state.days_largest}`)
+      .then({
+      })
     })
     //TODO Insert API
   }
@@ -30,12 +33,39 @@ class Planner extends React.Component {
     this.setState({
       days_plan: temp,
     }, () => {
+      axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/delete/?userId=admin&tripId=${index}`)
     })
     //TODO Remove API
   }
 
-  componentDidMount() {
+  updateInput(index, oneplan){
+    let temp = this.state.days_plan.slice();
+    temp.map((val) =>{
+      if(val.days_key == index){
+        val.days_text = oneplan;
+        return val;
+      }else{
+        return val;
+      }
+    })
+    this.setState({
+      days_plan: temp,
+    },()=>{
+      axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/update/?userId=admin&tripId=${index}&business_name=${oneplan}`)
+    })
+  }
 
+  componentDidMount() {
+    axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin`)
+    .then((response)=>{
+      // let response_ = '[{days_key: 1, days_text: "hello"}]';
+      // let temp = JSON.parse(response_);
+      let temp = response;
+      this.setState({
+        days_plan: temp,
+        days_largest: temp[temp.length-1].days_key,
+      })
+    })
   }
 
   render() {
@@ -43,13 +73,12 @@ class Planner extends React.Component {
       <div class="ui raised segments">
         {this.state.days_plan.map((val, ind) => {
           return (
-            <DaysComponents key={this.state.days_plan[ind].days_key} number={this.state.days_plan[ind].days_key} day_index={ind} deletefunc={(index) => this.remove_day(index)} />
+            <DaysComponents key={val.days_key} number={val.days_key} day_index={ind} plantext={val.days_text} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)}/>
           )
         })}
         <div class="ui segment">
           <div id="control_button">
             <button class="ui grey button" role="button" onClick={() => this.addDays()}> + </button>
-            <button class="ui primary button" role="button"> Save </button>
           </div>
         </div>
       </div>
@@ -60,9 +89,6 @@ class Planner extends React.Component {
 class DaysComponents extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      day: ' ',
-    }
     this.onChangeHandler = this.onChangeHandler.bind(this);
   }
 
@@ -71,18 +97,14 @@ class DaysComponents extends React.Component {
   }
 
   onChangeHandler(event) {
-    this.setState({
-      day: event.target.value,
-    }, () => {
-      console.log(this.state.day);
-    })
+    this.props.inputupdatefunc(this.props.number, event.target.value);
   }
 
   render() {
     return (
       <div class="ui segment">Day {this.props.day_index + 1}
         <div class="ui input">
-          <input type="text" value={this.state.day} onChange={this.onChangeHandler} />
+          <input type="text" value={this.props.plantext} onChange={this.onChangeHandler} />
           <button class="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
         </div>
       </div>

@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "baeaf0aff7e059a20032"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "145ac6f5947915b16fd3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1591,7 +1591,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  top: 1%;\n  width: 96%;\n  margin: 2%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  left: 55%; }\n", ""]);
+exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  width: 100%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  width: 100%; }\n", ""]);
 
 // exports
 
@@ -2159,7 +2159,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, "#planner {\n  width: 100%;\n  height: 100%;\n  overflow-y: auto; }\n", ""]);
+exports.push([module.i, "#planner {\n  position: fixed;\n  left: 77.5%;\n  top: 50%;\n  width: 22%;\n  height: 48%;\n  overflow-y: auto; }\n", ""]);
 
 // exports
 
@@ -29423,10 +29423,12 @@ var Planner = function (_React$Component) {
       var _this3 = this;
 
       axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
-        temp = JSON.parse(response);
+        // let response_ = '[{days_key: 1, days_text: "hello"}]';
+        // let temp = JSON.parse(response_);
+        var temp = response;
         _this3.setState({
           days_plan: temp,
-          days_largest: temp[temp.length - 1]
+          days_largest: temp[temp.length - 1].days_key
         });
       });
     }

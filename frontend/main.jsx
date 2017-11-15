@@ -4,4 +4,4 @@ import App from './components/Home/app.jsx';
 import 'semantic-ui-css/semantic.min.css';
 
  
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'));

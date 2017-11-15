@@ -1,8 +1,6 @@
 .ui.raised.segments{
     position: absolute;
-    top: 1%;
-    width: 96%;
-    margin: 2%;
+    width: 100%;
 }
 
 .ui.input{
@@ -21,5 +19,6 @@
 
 #control_button button{
     position: relative;
-    left: 55%;
+    width: 100%;
+    // left: 80%;
 }
