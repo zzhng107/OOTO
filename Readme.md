@@ -10,8 +10,8 @@ and ["Template tags"](https://docs.djangoproject.com/en/1.11/ref/templates/built
 ### Deploy
 1. Push your changes
 2. `cd /root/OOTO`
-3. 'git pull origin master'
-4. 'httpd -k restart'
+3. `git pull origin master`
+4. `httpd -k restart`
 
 ### Overhaul
 Currently, a lot of stuff was hardcoded, and we are yet to familiarize ourselves with Django, therefore I propose that we
