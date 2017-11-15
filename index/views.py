@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+import os
+from django.shortcuts import render_to_response
 from django.http import HttpResponse
+from django.template import Context, loader
 
 # Create your views here.
 
 
 def index(request):
-    with open("/root/OOTO/frontend/index.html") as f:
-        html = f.read()
-    return HttpResponse(html)
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render_to_response('index.html')

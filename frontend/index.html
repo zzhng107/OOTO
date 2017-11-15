@@ -58,9 +58,10 @@
 		</div>
 	</div>
 
-    <script src="index.js"></script>
+    {% load static %}
+    <script src="{% static "index.js"%}"></script>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script src="./components/Map/map.js"></script>
+    <script src="{% static "map.js"%}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0S6eAmPUcpHuKqSnIqiNv-bGztlDMKu4&callback=initMap" asyncdefer></script>
 
 

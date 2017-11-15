@@ -3,6 +3,7 @@ var map;
 		var businesses = new Map();
 		var markerCluster;
 		var displayMarkers = false;
+		var inDrag = false;
 		var chicago = { lat: 41.850033, lng: -87.6500523 };
 		var clusterImagePath = { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' };
 		const cityLevelZoom = 10;
@@ -13,10 +14,20 @@ var map;
 			});
 			map.addListener('bounds_changed', boundChanged);
 			map.addListener('click', clearHighlight);
+			map.addListener('drag', function() {
+				inDrag = true;
+			});
+			map.addListener('dragend', function() {
+				inDrag = false;
+				boundChanged();
+			});
 			markerCluster = new MarkerClusterer(map, [], clusterImagePath);
 			displayZoomInMessage();
 		}
 		function boundChanged() {
+			if (inDrag) {
+				return;
+			}
 			var bounds = map.getBounds();
 			if (map.getZoom() >= cityLevelZoom) {
 				realQueryBusinesses(bounds);
@@ -141,13 +152,14 @@ var map;
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState == 4 && this.status == 200) {
+					console.log(this.responseText);
 					rendering(this.responseText, bounds);
 				}
 			};
-			xhttp.open("POST", "/api/", true);
-			xhttp.send(requestString);
+			xhttp.open("GET", "/api/?" + requestString, true);
+			xhttp.send();
 		}
-
+/*
 		function queryBusinesses(bounds) {
 			console.log(JSON.stringify(bounds));
 			var response =
@@ -202,7 +214,7 @@ var map;
 				} \
 			]';
 			rendering(response, bounds);
-		}
+		}*/
 
 		function highlightMarker(id) {
 			clearHighlight();

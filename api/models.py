@@ -88,6 +88,20 @@ class Business(models.Model):
     stars = models.FloatField(blank=True, null=True)
     review_count = models.IntegerField(blank=True, null=True)
 
+    def as_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "address": self.address,
+            "city": self.city,
+            "state": self.state,
+            "postal_code": self.postal_code,
+            "latitude": self.latitude,
+            "longitude": self.longitude,
+            "stars": self.stars,
+            "review_count": self.review_count
+        }
+
     class Meta:
         managed = False
         db_table = 'business'
