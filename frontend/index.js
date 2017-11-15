@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b32c119d037aa172751f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ed1ecfd5059ed8635815"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29374,7 +29374,7 @@ var Planner = function (_React$Component) {
       var _this2 = this;
 
       var temp = this.state.days_plan.slice();
-      temp.push({ days_key: this.state.days_largest + 1, days_text: "" });
+      temp.push({ days_key: this.state.days_largest + 1, business_name: "" });
       this.setState({
         days_largest: this.state.days_largest + 1,
         days_plan: temp
@@ -29405,7 +29405,7 @@ var Planner = function (_React$Component) {
       var temp = this.state.days_plan.slice();
       temp.map(function (val) {
         if (val.days_key == index) {
-          val.days_text = oneplan;
+          val.business_name = oneplan;
           return val;
         } else {
           return val;
@@ -29423,7 +29423,7 @@ var Planner = function (_React$Component) {
       var _this3 = this;
 
       axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
-        // let response_ = '[{days_key: 1, days_text: "hello"}]';
+        // let response_ = '[{days_key: 1, business_name: "hello"}]';
         // let temp = JSON.parse(response_);
         var temp = response.data;
         console.log(response);
@@ -29442,7 +29442,7 @@ var Planner = function (_React$Component) {
         'div',
         { className: 'ui raised segments' },
         this.state.days_plan.map(function (val, ind) {
-          return _react2.default.createElement(DaysComponents, { key: val.days_key, number: val.days_key, day_index: ind, plantext: val.days_text, deletefunc: function deletefunc(index) {
+          return _react2.default.createElement(DaysComponents, { key: val.days_key, number: val.days_key, day_index: ind, plantext: val.business_name, deletefunc: function deletefunc(index) {
               return _this4.remove_day(index);
             }, inputupdatefunc: function inputupdatefunc(index, oneplan) {
               return _this4.updateInput(index, oneplan);
