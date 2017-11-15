@@ -75,3 +75,17 @@ def tripUpdate(request):
     trip.save(force_update=True)
     return HttpResponse("Update Success")
 
+def tripQuery(request):
+    paras = request.GET
+    userId = paras['userId']
+    trips = Trips.objects.filter(userId= userId)
+    #trips = sorted(trips, )
+    res  = []
+    for trip in trips:
+        dic = {}
+        dic['tripId'] = int(trip.tripId)
+        dic['business_name'] = str(trip.business_id)
+        if dic['business_name'] == "None":
+            dic['business_name']=""
+        res.append(dic)
+    return JsonResponse(res, safe = False)
