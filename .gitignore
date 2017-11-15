@@ -20,6 +20,10 @@
 *.tar
 *.zip
 
+# pycharm cache files #
+#####################
+*.pyc
+
 # Logs and databases #
 ######################
 *.log
