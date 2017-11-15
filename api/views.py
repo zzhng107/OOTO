@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import JsonResponse
-from api.models import Business
+from api.models import Business, Trips
 import json
 
 # Create your views here.
@@ -51,3 +51,27 @@ def queryBusiness():
     coords = [coordToString(obj.latitude,obj.longitude) for obj in allBusiness ]
     result = {"Number of business":num, "all names": names, "coords":coords}
     return JsonResponse(result, safe=False)
+
+
+def tripInsert(request):
+    paras = request.GET
+    trip = Trips()
+    trip.tripId = paras['tripId']
+    trip.userId = paras['userId']
+    trip.save()
+    return HttpResponse("Insert Success")
+
+def tripDelete(request):
+    paras = request.GET
+    trip = Trips.objects.filter(tripId=paras['tripId'], userId=paras['userId'] )
+    trip.delete()
+    return HttpResponse("Delete Success")
+
+def tripUpdate(request):
+    paras = request.GET
+    trips = Trips.objects.filter(tripId=paras['tripId'], userId=paras['userId'])
+    trip = trips[0]
+    trip.business_id = str(paras['business_name'])
+    trip.save(force_update=True)
+    return HttpResponse("Update Success")
+

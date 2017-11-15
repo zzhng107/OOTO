@@ -205,3 +205,27 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'user'
+
+
+class TripsUser(models.Model):
+    id = models.CharField(primary_key=True, max_length=22)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    password = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'tripsUser'
+
+
+class Trips(models.Model):
+    userId = models.CharField(max_length=22)
+    tripId = models.IntegerField()
+    business_id = models.CharField(max_length=22)
+    time = models.DateTimeField()
+    description  = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'trips'
+
+
