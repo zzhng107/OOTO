@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "2f2b91c9421b1333459a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "baeaf0aff7e059a20032"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29419,20 +29419,30 @@ var Planner = function (_React$Component) {
     }
   }, {
     key: 'componentDidMount',
-    value: function componentDidMount() {}
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
+        temp = JSON.parse(response);
+        _this3.setState({
+          days_plan: temp,
+          days_largest: temp[temp.length - 1]
+        });
+      });
+    }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _react2.default.createElement(
         'div',
         { className: 'ui raised segments' },
         this.state.days_plan.map(function (val, ind) {
           return _react2.default.createElement(DaysComponents, { key: val.days_key, number: val.days_key, day_index: ind, plantext: val.days_text, deletefunc: function deletefunc(index) {
-              return _this3.remove_day(index);
+              return _this4.remove_day(index);
             }, inputupdatefunc: function inputupdatefunc(index, oneplan) {
-              return _this3.updateInput(index, oneplan);
+              return _this4.updateInput(index, oneplan);
             } });
         }),
         _react2.default.createElement(
@@ -29444,7 +29454,7 @@ var Planner = function (_React$Component) {
             _react2.default.createElement(
               'button',
               { className: 'ui grey button', role: 'button', onClick: function onClick() {
-                  return _this3.addDays();
+                  return _this4.addDays();
                 } },
               ' + '
             )
@@ -29463,10 +29473,10 @@ var DaysComponents = function (_React$Component2) {
   function DaysComponents(props) {
     _classCallCheck(this, DaysComponents);
 
-    var _this4 = _possibleConstructorReturn(this, (DaysComponents.__proto__ || Object.getPrototypeOf(DaysComponents)).call(this, props));
+    var _this5 = _possibleConstructorReturn(this, (DaysComponents.__proto__ || Object.getPrototypeOf(DaysComponents)).call(this, props));
 
-    _this4.onChangeHandler = _this4.onChangeHandler.bind(_this4);
-    return _this4;
+    _this5.onChangeHandler = _this5.onChangeHandler.bind(_this5);
+    return _this5;
   }
 
   _createClass(DaysComponents, [{
@@ -29482,7 +29492,7 @@ var DaysComponents = function (_React$Component2) {
   }, {
     key: 'render',
     value: function render() {
-      var _this5 = this;
+      var _this6 = this;
 
       return _react2.default.createElement(
         'div',
@@ -29496,7 +29506,7 @@ var DaysComponents = function (_React$Component2) {
           _react2.default.createElement(
             'button',
             { className: 'ui mini circular button', role: 'button', onClick: function onClick() {
-                return _this5.onClickHandler();
+                return _this6.onClickHandler();
               } },
             ' - '
           )
