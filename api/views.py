@@ -92,10 +92,10 @@ def tripQuery(request):
     res  = []
     for trip in trips:
         dic = {}
-        dic['tripId'] = int(trip.tripId)
-        dic['business_name'] = str(trip.business_name)
-        if dic['business_name'] == "None":
-            dic['business_name']=""
+        dic['days_key'] = int(trip.tripId)
+        dic['days_text'] = str(trip.business_name)
+        if dic['days_text'] == "None":
+            dic['days_text']=""
         '''
         dic['business_id'] = str(trip.business_id)
         if dic['business_id'] == "None":
