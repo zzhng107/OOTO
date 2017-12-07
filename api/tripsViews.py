@@ -13,7 +13,5 @@ def tripUpdateById(request):
     trips = Trips.objects.filter(tripId=paras['tripId'], userId=paras['userId'])
     trip = trips[0]
     trip.business_id = str(paras['business_id'])
-    business_name = Business.objects.filter(id=trip.business_id)[0]
-    trip.business_name = business_name.name
     trip.save(force_update=True)
     return HttpResponse("Update Success")
