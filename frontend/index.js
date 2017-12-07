@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "27655e05fa4520c95398"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "61821063527bfd444f91"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29349,13 +29349,143 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } // import React, { Component } from 'react';
+// import style from './planner.scss';
+// var axios = require('axios');
+
+
+// // function test_f(){
+// //   console.log("Called successfully\n");
+// // }
+
+// class Planner extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.useForFillTripPlan = this.useForFillTripPlan.bind(this);
+//     this.state = {
+//       days_largest: 0,
+//       days_plan: [],
+//     };
+//   }
+
+//   addDays() {
+//     let temp = this.state.days_plan.slice();
+//     temp.push({ days_key: this.state.days_largest + 1, days_text: ""});
+//     this.setState({
+//       days_largest: this.state.days_largest + 1,
+//       days_plan: temp,
+//     }, () => {
+//       axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/insert/?userId=admin&tripId=${this.state.days_largest}`)
+//       .then({
+//       })
+//     })
+//     //TODO Insert API
+//   }
+
+//   remove_day(index) {
+//     let temp = this.state.days_plan.slice();
+//     // console.log(temp);
+//     temp = temp.filter((val) => {return val.days_key != index });
+//     // console.log(temp);
+//     this.setState({
+//       days_plan: temp,
+//     }, () => {
+//       axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/delete/?userId=admin&tripId=${index}`)
+//     })
+//     //TODO Remove API
+//   }
+
+//   updateInput(index, oneplan){
+//     let temp = this.state.days_plan.slice();
+//     temp.map((val) =>{
+//       if(val.days_key == index){
+//         val.days_text = oneplan;
+//         return val;
+//       }else{
+//         return val;
+//       }
+//     })
+//     this.setState({
+//       days_plan: temp,
+//     },()=>{
+//       axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/update/?userId=admin&tripId=${index}&business_name=${oneplan}`)
+//     })
+//   }
+
+//   componentDidMount() {
+//     axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin`)
+//     .then((response)=>{
+//       // let response_ = '[{days_key: 1, days_text: "hello"}]';
+//       // let temp = JSON.parse(response_);
+//       let temp = response.data;
+//       console.log(response);
+//       this.setState({
+//         days_plan: temp,
+//         days_largest: temp[temp.length-1].tripId,
+//       })
+//     })
+//   }
+
+//   useForFillTripPlan(event){
+//     console.log(event);
+//     let temp_days_plan = this.state.days_plan.slice();
+//     temp_days_plan[temp_days_plan.length-1].days_text = JSON.parse(event.target.value).name;
+//     this.setState({
+//       days_plan: temp_days_plan,
+//     })
+//   }
+
+//   render() {
+//     return (
+//       <div className="ui raised segments">
+//         {this.state.days_plan.map((val, ind) => {
+//           return (
+//             <DaysComponents key={val.days_key} number={val.days_key} day_index={ind} plantext={val.days_text} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)}/>
+//           )
+//         })}
+//         <div className="ui segment">
+//           <div id="control_button">
+//             <button className="ui grey button" role="button" onClick={() => this.addDays()}> + </button>
+//           </div>
+//         </div>
+
+//         <input id="useForFillTripPlan" type="text" onChange={this.useForFillTripPlan}/>
+
+//       </div>
+//     );
+//   }
+// }
+
+// class DaysComponents extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.onChangeHandler = this.onChangeHandler.bind(this);
+//   }
+
+//   onClickHandler() {
+//     this.props.deletefunc(this.props.number);
+//   }
+
+//   onChangeHandler(event) {
+//     this.props.inputupdatefunc(this.props.number, event.target.value);
+//   }
+
+//   render() {
+//     return (
+//       <div className="ui segment">Day {this.props.day_index + 1}
+//         <div className="ui input">
+//           <input type="text" value={this.props.plantext} onChange={this.onChangeHandler} />
+//           <button className="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
+//         </div>      
+//       </div>
+
+//     );
+//   }
+// }
+
+// export default Planner;
 
 var axios = __webpack_require__(70);
-
-// function test_f(){
-//   console.log("Called successfully\n");
-// }
 
 var Planner = function (_React$Component) {
   _inherits(Planner, _React$Component);
@@ -29365,7 +29495,6 @@ var Planner = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Planner.__proto__ || Object.getPrototypeOf(Planner)).call(this, props));
 
-    _this.useForFillTripPlan = _this.useForFillTripPlan.bind(_this);
     _this.state = {
       days_largest: 0,
       days_plan: []
@@ -29430,22 +29559,12 @@ var Planner = function (_React$Component) {
       axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
         // let response_ = '[{days_key: 1, days_text: "hello"}]';
         // let temp = JSON.parse(response_);
-        var temp = response.data;
+        var temp = response;
         console.log(response);
         _this3.setState({
           days_plan: temp,
           days_largest: temp[temp.length - 1].tripId
         });
-      });
-    }
-  }, {
-    key: 'useForFillTripPlan',
-    value: function useForFillTripPlan(event) {
-      console.log(event);
-      var temp_days_plan = this.state.days_plan.slice();
-      temp_days_plan[temp_days_plan.length() - 1].days_text = JSON.parse(event.target.value).name;
-      this.setState({
-        days_plan: temp_days_plan
       });
     }
   }, {
@@ -29477,8 +29596,7 @@ var Planner = function (_React$Component) {
               ' + '
             )
           )
-        ),
-        _react2.default.createElement('input', { id: 'useForFillTripPlan', type: 'text', onChange: this.useForFillTripPlan })
+        )
       );
     }
   }]);
