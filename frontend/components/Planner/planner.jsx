@@ -200,7 +200,7 @@ class Planner extends React.Component {
       console.log(response);
       this.setState({
         days_plan: temp,
-        days_largest: temp[temp.length-1].tripId,
+        days_largest: temp[temp.length-1].days_key,
       })
     })
   }
