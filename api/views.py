@@ -60,7 +60,7 @@ def tripUpdate(request):
     paras = request.GET
     trips = Trips.objects.filter(tripId=paras['tripId'], userId=paras['userId'])
     trip = trips[0]
-    trip.business_id = str(paras['business_name'])
+    trip.business_name = str(paras['business_name'])
     trip.save(force_update=True)
     return HttpResponse("Update Success")
 
@@ -73,8 +73,12 @@ def tripQuery(request):
     for trip in trips:
         dic = {}
         dic['tripId'] = int(trip.tripId)
-        dic['business_name'] = str(trip.business_id)
+        dic['business_name'] = str(trip.business_name)
         if dic['business_name'] == "None":
             dic['business_name']=""
+        res.append(dic)
+        dic['business_id'] = str(trip.business_id)
+        if dic['business_id'] == "None":
+            dic['business_id']=""
         res.append(dic)
     return JsonResponse(res, safe = False)
