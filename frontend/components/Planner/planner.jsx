@@ -140,6 +140,7 @@ var axios = require('axios');
 
 class Planner extends React.Component {
   constructor(props) {
+    this.useForFillTripPlan = this.useForFillTripPlan.bind(this);
     super(props);
     this.state = {
       days_largest: 0,
