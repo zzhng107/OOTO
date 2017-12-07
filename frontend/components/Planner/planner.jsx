@@ -196,7 +196,7 @@ class Planner extends React.Component {
     .then((response)=>{
       // let response_ = '[{days_key: 1, days_text: "hello"}]';
       // let temp = JSON.parse(response_);
-      let temp = response;
+      let temp = response.data;
       console.log(response);
       this.setState({
         days_plan: temp,
