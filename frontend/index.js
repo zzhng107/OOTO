@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "571068208089631807a0"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "82bd1515271713eeab2f"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1591,7 +1591,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  width: 100%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  width: 100%; }\n\n#useForFillTripPlan {\n  display: none; }\n", ""]);
+exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  width: 100%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  width: 100%; }\n", ""]);
 
 // exports
 
@@ -29576,6 +29576,10 @@ var Planner = function (_React$Component) {
       this.setState({
         days_plan: temp_days_plan
       });
+      // axois.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin')
+      // .then((response)=>{
+
+      // })
     }
   }, {
     key: 'render',

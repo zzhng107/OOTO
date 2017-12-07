@@ -212,6 +212,10 @@ class Planner extends React.Component {
     this.setState({
       days_plan: temp_days_plan,
     })
+    // axois.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin')
+    // .then((response)=>{
+
+    // })
   }
 
   render() {
