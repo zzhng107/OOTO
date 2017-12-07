@@ -75,12 +75,19 @@ class Planner extends React.Component {
   }
 
   useForFillTripPlan(event){
+    console.log("inside");
+    console.log(event);
     let temp_days_plan = this.state.days_plan.slice();
     temp_days_plan[temp_days_plan.length()-1].days_text = JSON.parse(event.target.value).name;
     this.setState({
       days_plan: temp_days_plan,
+    },()=>{
+      let index = temp_days_plan[temp_days_plan.length()-1].days_key;
+      let b_id = JSON.parse(event.target.value).id;      
+      axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/updateId/?userId=admin&tripId=${index}&business_id=${b_id}`);
     })
   }
+
 
   render() {
     return (
