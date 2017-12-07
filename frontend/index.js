@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7f00f21a3265708a9218"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "571068208089631807a0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29568,6 +29568,16 @@ var Planner = function (_React$Component) {
       });
     }
   }, {
+    key: 'useForFillTripPlan',
+    value: function useForFillTripPlan(event) {
+      console.log(event);
+      var temp_days_plan = this.state.days_plan.slice();
+      temp_days_plan[temp_days_plan.length - 1].days_text = JSON.parse(event.target.value).name;
+      this.setState({
+        days_plan: temp_days_plan
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this4 = this;
@@ -29596,7 +29606,8 @@ var Planner = function (_React$Component) {
               ' + '
             )
           )
-        )
+        ),
+        _react2.default.createElement('input', { id: 'useForFillTripPlan', type: 'text', onChange: this.useForFillTripPlan })
       );
     }
   }]);

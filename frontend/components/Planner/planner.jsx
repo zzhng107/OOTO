@@ -99,7 +99,7 @@
 //         </div>
 
 //         <input id="useForFillTripPlan" type="text" onChange={this.useForFillTripPlan}/>
-        
+
 //       </div>
 //     );
 //   }
@@ -149,14 +149,14 @@ class Planner extends React.Component {
 
   addDays() {
     let temp = this.state.days_plan.slice();
-    temp.push({ days_key: this.state.days_largest + 1, days_text: ""});
+    temp.push({ days_key: this.state.days_largest + 1, days_text: "" });
     this.setState({
       days_largest: this.state.days_largest + 1,
       days_plan: temp,
     }, () => {
       axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/insert/?userId=admin&tripId=${this.state.days_largest}`)
-      .then({
-      })
+        .then({
+        })
     })
     //TODO Insert API
   }
@@ -164,7 +164,7 @@ class Planner extends React.Component {
   remove_day(index) {
     let temp = this.state.days_plan.slice();
     // console.log(temp);
-    temp = temp.filter((val) => {return val.days_key != index });
+    temp = temp.filter((val) => { return val.days_key != index });
     // console.log(temp);
     this.setState({
       days_plan: temp,
@@ -174,34 +174,43 @@ class Planner extends React.Component {
     //TODO Remove API
   }
 
-  updateInput(index, oneplan){
+  updateInput(index, oneplan) {
     let temp = this.state.days_plan.slice();
-    temp.map((val) =>{
-      if(val.days_key == index){
+    temp.map((val) => {
+      if (val.days_key == index) {
         val.days_text = oneplan;
         return val;
-      }else{
+      } else {
         return val;
       }
     })
     this.setState({
       days_plan: temp,
-    },()=>{
+    }, () => {
       axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/update/?userId=admin&tripId=${index}&business_name=${oneplan}`)
     })
   }
 
   componentDidMount() {
     axios.get(`http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin`)
-    .then((response)=>{
-      // let response_ = '[{days_key: 1, days_text: "hello"}]';
-      // let temp = JSON.parse(response_);
-      let temp = response.data;
-      console.log(response);
-      this.setState({
-        days_plan: temp,
-        days_largest: temp[temp.length-1].days_key,
+      .then((response) => {
+        // let response_ = '[{days_key: 1, days_text: "hello"}]';
+        // let temp = JSON.parse(response_);
+        let temp = response.data;
+        console.log(response);
+        this.setState({
+          days_plan: temp,
+          days_largest: temp[temp.length - 1].days_key,
+        })
       })
+  }
+
+  useForFillTripPlan(event) {
+    console.log(event);
+    let temp_days_plan = this.state.days_plan.slice();
+    temp_days_plan[temp_days_plan.length - 1].days_text = JSON.parse(event.target.value).name;
+    this.setState({
+      days_plan: temp_days_plan,
     })
   }
 
@@ -210,7 +219,7 @@ class Planner extends React.Component {
       <div class="ui raised segments">
         {this.state.days_plan.map((val, ind) => {
           return (
-            <DaysComponents key={val.days_key} number={val.days_key} day_index={ind} plantext={val.days_text} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)}/>
+            <DaysComponents key={val.days_key} number={val.days_key} day_index={ind} plantext={val.days_text} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)} />
           )
         })}
         <div class="ui segment">
@@ -218,6 +227,9 @@ class Planner extends React.Component {
             <button class="ui grey button" role="button" onClick={() => this.addDays()}> + </button>
           </div>
         </div>
+
+        <input id="useForFillTripPlan" type="text" onChange={this.useForFillTripPlan} />
+
       </div>
     );
   }
