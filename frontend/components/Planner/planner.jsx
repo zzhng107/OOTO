@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import style from './planner.scss';
 var axios = require('axios');
 
+
+function test_f(){
+  console.log("Called successfully\n");
+}
+
 class Planner extends React.Component {
   constructor(props) {
     super(props);

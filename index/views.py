@@ -10,4 +10,4 @@ from django.template import Context, loader
 
 
 def index(request):
-    return render_to_response('index.html')
+    return render_to_response('main_page.html')
