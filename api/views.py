@@ -76,7 +76,6 @@ def tripQuery(request):
         dic['business_name'] = str(trip.business_name)
         if dic['business_name'] == "None":
             dic['business_name']=""
-        res.append(dic)
         dic['business_id'] = str(trip.business_id)
         if dic['business_id'] == "None":
             dic['business_id']=""
