@@ -208,9 +208,20 @@ var map;
             businessDetail.setAttribute('href', 'business/detail/' + JSON.parse(parsedResponse.Business)[0].pk);
             businessDetail.setAttribute('class', 'btn btn-primary');
             businessDetail.textContent = 'Details';
+            let addBusinessToTrip = document.createElement('div');
+            addBusinessToTrip.setAttribute('class', 'btn btn-primary');
+            addBusinessToTrip.textContent = '+';
+            addBusinessToTrip.onclick = function() {
+				let data = {};
+				data.id = JSON.parse(parsedResponse.Business)[0].pk;
+				data.name = parsedBusiness.name;
+            	let para = document.getElementById('useForFillTripPlan');
+				para.innerHTML = JSON.stringify(data);
+			};
             titleBlock.appendChild(businessTitle);
             titleBlock.appendChild(businessStar);
             titleBlock.appendChild(businessDetail);
+            titleBlock.appendChild(addBusinessToTrip);
 
             let businessAttributes = document.createElement('ul');
             businessAttributes.setAttribute('class', 'list-group list-group-flush');
