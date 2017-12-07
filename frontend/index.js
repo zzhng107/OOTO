@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "de096aee3b5dc045cc2a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "9e5ef0def52efaa67c2c"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29508,7 +29508,7 @@ var Planner = function (_React$Component) {
       var _this2 = this;
 
       var temp = this.state.days_plan.slice();
-      temp.push({ days_key: this.state.days_largest + 1, days_text: "" });
+      temp.push({ days_key: this.state.days_largest + 1, business_name: "" });
       this.setState({
         days_largest: this.state.days_largest + 1,
         days_plan: temp
@@ -29576,7 +29576,7 @@ var Planner = function (_React$Component) {
         'div',
         { className: 'ui raised segments' },
         this.state.days_plan.map(function (val, ind) {
-          return _react2.default.createElement(DaysComponents, { key: val.days_key, number: val.days_key, day_index: ind, plantext: val.days_text, deletefunc: function deletefunc(index) {
+          return _react2.default.createElement(DaysComponents, { key: val.tripId, number: val.tripId, day_index: ind, plantext: val.business_name, deletefunc: function deletefunc(index) {
               return _this4.remove_day(index);
             }, inputupdatefunc: function inputupdatefunc(index, oneplan) {
               return _this4.updateInput(index, oneplan);
