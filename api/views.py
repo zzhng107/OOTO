@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 from django.http import JsonResponse
-from api.models import Business, Category, Hours
+from django.shortcuts import render
+
+from api.models import Business, Category, Hours, Review
 from api.models import Trips
 from django.core import serializers
 import json
@@ -38,9 +41,26 @@ def queryBusinessPreview(request):
     print(response)
     return HttpResponse(json.dumps(response), content_type='application/json')
 
-def queryBusinessDetails(request):
 
-    return
+def queryBusinessDetails(request, id):
+
+    business = Business.objects.filter(id=id)
+    category = Category.objects.filter(business=business)
+    hour = Hours.objects.filter(business=business)
+
+    reviews = Review.objects.filter(business=business)
+    paginator = Paginator(reviews, 10)
+
+    page = request.GET.get('page', 1)
+    try:
+        review = paginator.page(page)
+    except PageNotAnInteger:
+        review = paginator.page(1)
+    except EmptyPage:
+        review = paginator.page(paginator.num_pages)
+
+    return render(request, 'business_detail.html', {'reviews': review, 'business': business, 'category': category, 'hour': hour})
+
 
 def tripInsert(request):
     paras = request.GET

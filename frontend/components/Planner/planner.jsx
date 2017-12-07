@@ -3,13 +3,14 @@ import style from './planner.scss';
 var axios = require('axios');
 
 
-function test_f(){
-  console.log("Called successfully\n");
-}
+// function test_f(){
+//   console.log("Called successfully\n");
+// }
 
 class Planner extends React.Component {
   constructor(props) {
     super(props);
+    this.useForFillTripPlan = this.useForFillTripPlan.bind(this);
     this.state = {
       days_largest: 0,
       days_plan: [],
@@ -74,6 +75,15 @@ class Planner extends React.Component {
     })
   }
 
+  useForFillTripPlan(event){
+    console.log(event);
+    let temp_days_plan = this.state.days_plan.slice();
+    temp_days_plan[temp_days_plan.length()-1].days_text = JSON.parse(event.target.value).name;
+    this.setState({
+      days_plan: temp_days_plan,
+    })
+  }
+
   render() {
     return (
       <div class="ui raised segments">
@@ -87,6 +97,9 @@ class Planner extends React.Component {
             <button class="ui grey button" role="button" onClick={() => this.addDays()}> + </button>
           </div>
         </div>
+
+        <input id="useForFillTripPlan" type="text" onChange={this.useForFillTripPlan}/>
+        
       </div>
     );
   }
@@ -112,7 +125,7 @@ class DaysComponents extends React.Component {
         <div class="ui input">
           <input type="text" value={this.props.plantext} onChange={this.onChangeHandler} />
           <button class="ui mini circular button" role="button" onClick={() => this.onClickHandler()}> - </button>
-        </div>
+        </div>      
       </div>
 
     );

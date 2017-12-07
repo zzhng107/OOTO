@@ -182,7 +182,7 @@ var map;
 
 		function renderingPreview(response, panel) {
             let parsedResponse = JSON.parse(response);
-            panel.setAttribute('class', 'card');
+            panel.setAttribute('class', 'card w-95');
             while (panel.hasChildNodes()) {
                 panel.removeChild(panel.lastChild);
             }
@@ -205,7 +205,7 @@ var map;
                 businessStar.textContent += '\u2606';
             }
             let businessDetail = document.createElement('a');
-            businessDetail.setAttribute('href', 'business/detail/' + JSON.parse(parsedResponse.Business)[0].pk);
+            businessDetail.setAttribute('href', '/api/business/detail/' + JSON.parse(parsedResponse.Business)[0].pk);
             businessDetail.setAttribute('class', 'btn btn-primary');
             businessDetail.textContent = 'Details';
             let addBusinessToTrip = document.createElement('div');

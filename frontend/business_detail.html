@@ -3,8 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <div class="card-columns">
+                {% for r in reviews %}
+                    <div class="card">
+                        <div class="card-block">
+                            <p class="card-text">
+                            {% for s in "xxxxx" %}
+                                {% if forloop.counter0 < r.stars %}
+                                    <span>&#x2605;</span>
+                                {% else %}
+                                    <span>&#x2606;</span>
+                                {% endif %}
+                            {% endfor %}
+                            </p>
+                            <p class="card-text">{{ r.text }}</p>
+                            <p class="card-text"><small class="text-muted">{{ r.useful }} people found useful</small></p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if reviews.has_other_pages %}
+                <ul class="pagination">
+                {% if reviews.has_previous %}
+                    <li><a href="?page={{ reviews.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                {% for i in reviews.paginator.page_range %}
+                    {% if reviews.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if reviews.has_next %}
+                    <li><a href="?page={{ reviews.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="col-4">
+            <div class="card w-95">
+            {% for b in business %}
+                <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ b.latitude }},{{ b.longitude }}&zoom=14&size=400x400&key=AIzaSyAJfToJLgTAipVoSTFvnJeiRbOkIGoAQmo" class="card-img-top"></img>
+                <div class="card-block">
 
+                        <h4 class="card-title">{{ b.name }}</h4>
+                        <p class="card-text">{{ b.address }}, {{ b.city }}, {{ b.state }} - {{ b.postal_code }}</p>
+                        <p class="card-text">
+                            {% for h in hour %}
+                                <span>h.hours</span><br>
+                            {% endfor %}
+                        </p>
+                        <p class="card-text">
+                            {% for c in category %}
+                                <span>{{ c.category }}</span><br>
+                            {% endfor %}
+                        </p>
+                        <a href="?" class="btn btn-primary">Add to trip</a>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </body>
 </html>

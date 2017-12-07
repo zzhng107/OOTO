@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "860931bbdd6185f330cb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b94b30fc0dadee6f57d1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -1591,7 +1591,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  width: 100%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  width: 100%; }\n", ""]);
+exports.push([module.i, ".ui.raised.segments {\n  position: absolute;\n  width: 100%; }\n\n.ui.input {\n  margin-left: 5%; }\n\n.ui.circular.button {\n  position: relative;\n  left: 5%; }\n\n#control_button button {\n  position: relative;\n  width: 100%; }\n\n#useForFillTripPlan {\n  display: none; }\n", ""]);
 
 // exports
 
@@ -2159,7 +2159,7 @@ exports = module.exports = __webpack_require__(10)(undefined);
 
 
 // module
-exports.push([module.i, "#planner {\n  position: fixed;\n  left: 77.5%;\n  top: 51%;\n  width: 22%;\n  height: 48%;\n  overflow-y: auto; }\n", ""]);
+exports.push([module.i, "#planner {\n  position: fixed;\n  left: 77.5%;\n  top: 50%;\n  width: 22%;\n  height: 48%;\n  overflow-y: auto; }\n", ""]);
 
 // exports
 
@@ -29353,6 +29353,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var axios = __webpack_require__(70);
 
+// function test_f(){
+//   console.log("Called successfully\n");
+// }
+
 var Planner = function (_React$Component) {
   _inherits(Planner, _React$Component);
 
@@ -29361,6 +29365,7 @@ var Planner = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Planner.__proto__ || Object.getPrototypeOf(Planner)).call(this, props));
 
+    _this.useForFillTripPlan = _this.useForFillTripPlan.bind(_this);
     _this.state = {
       days_largest: 0,
       days_plan: []
@@ -29374,7 +29379,7 @@ var Planner = function (_React$Component) {
       var _this2 = this;
 
       var temp = this.state.days_plan.slice();
-      temp.push({ tripId: this.state.days_largest + 1, business_name: "" });
+      temp.push({ days_key: this.state.days_largest + 1, days_text: "" });
       this.setState({
         days_largest: this.state.days_largest + 1,
         days_plan: temp
@@ -29389,7 +29394,7 @@ var Planner = function (_React$Component) {
       var temp = this.state.days_plan.slice();
       // console.log(temp);
       temp = temp.filter(function (val) {
-        return val.tripId != index;
+        return val.days_key != index;
       });
       // console.log(temp);
       this.setState({
@@ -29404,8 +29409,8 @@ var Planner = function (_React$Component) {
     value: function updateInput(index, oneplan) {
       var temp = this.state.days_plan.slice();
       temp.map(function (val) {
-        if (val.tripId == index) {
-          val.business_name = oneplan;
+        if (val.days_key == index) {
+          val.days_text = oneplan;
           return val;
         } else {
           return val;
@@ -29423,14 +29428,24 @@ var Planner = function (_React$Component) {
       var _this3 = this;
 
       axios.get('http://fa17-cs411-29.cs.illinois.edu/api/trip/query/?userId=admin').then(function (response) {
-        // let response_ = '[{tripId: 1, business_name: "hello"}]';
+        // let response_ = '[{days_key: 1, days_text: "hello"}]';
         // let temp = JSON.parse(response_);
-        var temp = response.data;
+        var temp = response;
         console.log(response);
         _this3.setState({
           days_plan: temp,
           days_largest: temp[temp.length - 1].tripId
         });
+      });
+    }
+  }, {
+    key: 'useForFillTripPlan',
+    value: function useForFillTripPlan(event) {
+      console.log(event);
+      var temp_days_plan = this.state.days_plan.slice();
+      temp_days_plan[temp_days_plan.length() - 1].days_text = JSON.parse(event.target.value).name;
+      this.setState({
+        days_plan: temp_days_plan
       });
     }
   }, {
@@ -29442,7 +29457,7 @@ var Planner = function (_React$Component) {
         'div',
         { className: 'ui raised segments' },
         this.state.days_plan.map(function (val, ind) {
-          return _react2.default.createElement(DaysComponents, { key: val.tripId, number: val.tripId, day_index: ind, plantext: val.business_name, deletefunc: function deletefunc(index) {
+          return _react2.default.createElement(DaysComponents, { key: val.days_key, number: val.days_key, day_index: ind, plantext: val.days_text, deletefunc: function deletefunc(index) {
               return _this4.remove_day(index);
             }, inputupdatefunc: function inputupdatefunc(index, oneplan) {
               return _this4.updateInput(index, oneplan);
@@ -29462,7 +29477,8 @@ var Planner = function (_React$Component) {
               ' + '
             )
           )
-        )
+        ),
+        _react2.default.createElement('input', { id: 'useForFillTripPlan', type: 'text', onChange: this.useForFillTripPlan })
       );
     }
   }]);
