@@ -149,7 +149,7 @@ class Planner extends React.Component {
 
   addDays() {
     let temp = this.state.days_plan.slice();
-    temp.push({ days_key: this.state.days_largest + 1, business_name: ""});
+    temp.push({ days_key: this.state.days_largest + 1, days_text: ""});
     this.setState({
       days_largest: this.state.days_largest + 1,
       days_plan: temp,
@@ -196,7 +196,7 @@ class Planner extends React.Component {
     .then((response)=>{
       // let response_ = '[{days_key: 1, days_text: "hello"}]';
       // let temp = JSON.parse(response_);
-      let temp = response.data;
+      let temp = response;
       console.log(response);
       this.setState({
         days_plan: temp,
@@ -210,7 +210,7 @@ class Planner extends React.Component {
       <div class="ui raised segments">
         {this.state.days_plan.map((val, ind) => {
           return (
-            <DaysComponents key={val.tripId} number={val.tripId} day_index={ind} plantext={val.business_name} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)}/>
+            <DaysComponents key={val.days_key} number={val.days_key} day_index={ind} plantext={val.days_text} deletefunc={(index) => this.remove_day(index)} inputupdatefunc={(index, oneplan) => this.updateInput(index, oneplan)}/>
           )
         })}
         <div class="ui segment">
