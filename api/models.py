@@ -108,7 +108,7 @@ class Business(models.Model):
 
 
 class Category(models.Model):
-    business = models.ForeignKey(Business, models.DO_NOTHING)
+    business = models.ForeignKey(Business, models.DO_NOTHING, primary_key=True)
     category = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -162,7 +162,7 @@ class DjangoSession(models.Model):
 
 class Hours(models.Model):
     hours = models.CharField(max_length=255, blank=True, null=True)
-    business = models.ForeignKey(Business, models.DO_NOTHING)
+    business = models.ForeignKey(Business, models.DO_NOTHING, primary_key=True)
 
     class Meta:
         managed = False
