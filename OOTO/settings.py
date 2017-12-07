@@ -54,6 +54,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'OOTO.urls'
 
+'''
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -69,7 +70,7 @@ TEMPLATES = [
         },
     },
 ]
-
+'''
 WSGI_APPLICATION = 'OOTO.wsgi.application'
 
 
@@ -137,7 +138,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': STATICFILES_DIRS,
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
             # ... some options here ...
             'context_processors': [

@@ -1,6 +1,7 @@
 var config = {
    entry: './main.jsx', // entry point
    output: {
+       path: '/',
          filename: 'index.js', // place where bundled app will be served
       },
    devServer: {
