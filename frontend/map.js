@@ -216,7 +216,7 @@ var map;
 				data.id = JSON.parse(parsedResponse.Business)[0].pk;
 				data.name = parsedBusiness.name;
             	let para = document.getElementById('useForFillTripPlan');
-				para.innerHTML = JSON.stringify(data);
+				para.value = JSON.stringify(data);
 			};
             titleBlock.appendChild(businessTitle);
             titleBlock.appendChild(businessStar);
