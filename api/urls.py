@@ -1,11 +1,12 @@
 from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
+from . import views, tripsViews
 
 urlpatterns = [
     url(r'^trip/insert', views.tripInsert, name='tripInsert'),
     url(r'^trip/delete', views.tripDelete, name='tripDelete'),
+   url(r'^trip/updateId', tripsViews.tripUpdateById, name='tripUpdateById'),
     url(r'^trip/update', views.tripUpdate, name='tripUpdate'),
     url(r'^trip/query', views.tripQuery, name='tripQuery'),
     url(r'^business/scope', views.queryBusinessWithinScope, name='businessScope'),

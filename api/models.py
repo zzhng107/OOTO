@@ -220,6 +220,7 @@ class TripsUser(models.Model):
 class Trips(models.Model):
     userId = models.CharField(max_length=22)
     tripId = models.IntegerField()
+    business_name = models.CharField(max_length=225)
     business_id = models.CharField(max_length=22)
     time = models.DateTimeField()
     description  = models.CharField(max_length=255)
