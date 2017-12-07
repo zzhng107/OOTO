@@ -2,7 +2,6 @@ var map;
 		var markers = new Map();
 		var businesses = new Map();
 		var markerCluster;
-		var indrag = false;
 		var displayMarkers = false;
 		var chicago = { lat: 41.850033, lng: -87.6500523 };
 		var clusterImagePath = { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' };
@@ -12,22 +11,11 @@ var map;
 				center: chicago,
 				zoom: 11
 			});
-			map.addListener('bounds_changed', boundChanged);
-			map.addListener('click', clearHighlight);
-			map.addListener('drag', function() {
-				inDrag = true;
-			});
-			map.addListener('dragend', function() {
-				inDrag = false;
-				boundChanged();
-			});
+			map.addListener('idle', boundChanged);
 			markerCluster = new MarkerClusterer(map, [], clusterImagePath);
 			displayZoomInMessage();
 		}
 		function boundChanged() {
-			if (indrag) {
-				return;
-			}
 			var bounds = map.getBounds();
 			if (map.getZoom() >= cityLevelZoom) {
 				realQueryBusinesses(bounds);
@@ -115,8 +103,11 @@ var map;
 						var panel = document.createElement('div');
 						panel.setAttribute('class', 'panel panel-default');
 						panel.setAttribute('id', "bid:" + parsedBusiness[i].pk);
+						panel.business_id = parsedBusiness[i].pk;
 						panel.onclick = function() {
-							queryBusinessPreview(parsedBusiness[i].pk, panel);
+							//console.log(this.business_id);
+							clearHighlight();
+							queryBusinessPreview(this.business_id, this);
                         };
 							var entryName = document.createElement('div');
 							entryName.setAttribute('class', 'panel-body');
@@ -181,7 +172,7 @@ var map;
 			var xhttp = new XMLHttpRequest();
 			xhttp.onreadystatechange = function() {
 				if (this.readyState === 4 && this.status === 200) {
-					console.log(this.responseText);
+					//console.log(this.responseText);
 					renderingPreview(this.responseText, panel);
 				}
 			};
@@ -190,109 +181,66 @@ var map;
 		}
 
 		function renderingPreview(response, panel) {
-			let parsedResponse = JSON.parse(response);
-			panel.setAttribute('class', 'card');
-			while (panel.hasChildNodes()) {
-				panel.removeChild(panel.lastChild);
-			}
-				let titleBlock = document.createElement('div');
-				titleBlock.setAttribute('class', 'card-block');
-					let businessTitle = document.createElement('h4');
-					businessTitle.setAttribute('class', 'card-title');
-					businessTitle.textContent = parsedResponse.Business.fields.name;
-					let businessStar = document.createElement('p');
-					businessStar.setAttribute('class', 'card-text');
-					for (let i = 0; i < Math.round(Number(parsedResponse.Business.fields.stars)); i++) {
-						businessStar.textContent += '\u2605';
-					}
-					for (let i = Math.round(Number(parsedResponse.Business.fields.stars)); i < 5; i++) {
-						businessStar.textContent += '\u2606';
-					}
-					let businessDetail = document.createElement('a');
-					businessDetail.setAttribute('href', '');
-					businessDetail.setAttribute('class', 'btn btn-primary');
-					businessDetail.textContent = 'Details';
-				titleBlock.appendChild(businessTitle);
-				titleBlock.appendChild(businessStar);
-				titleBlock.appendChild(businessDetail);
+            let parsedResponse = JSON.parse(response);
+            panel.setAttribute('class', 'card');
+            while (panel.hasChildNodes()) {
+                panel.removeChild(panel.lastChild);
+            }
 
-				let businessAttributes = document.createElement('ul');
-				businessAttributes.setAttribute('class', 'list-group list-group-flush');
-					let businessAddress = document.createElement('li');
-					businessAddress.setAttribute('class', 'list-group-item');
-					businessAddress.textContent = parsedResponse.Business.address + ', ' + parsedResponse.Business.city + ', ' + parsedResponse.Business.state + ' - ' + parsedResponse.Business.postal_code;
-					let businessCategory = document.createElement('li');
-					businessCategory.setAttribute('class', 'list-group-item');
-					businessCategory.textContent = parsedResponse.Category;
-					let businessHours = document.createElement('li');
-					businessHours.setAttribute('class', 'list-group-item');
-					businessHours.textContent = parsedResponse.Hour.hours;
-				businessAttributes.appendChild(businessAddress);
-				businessAttributes.appendChild(businessCategory);
-				businessAttributes.appendChild(businessHours);
+            let parsedBusiness = JSON.parse(parsedResponse.Business)[0].fields;
+            let parsedCategory = JSON.parse(parsedResponse.Category);
+            let parsedHour = JSON.parse(parsedResponse.Hour);
+
+            let titleBlock = document.createElement('div');
+            titleBlock.setAttribute('class', 'card-block');
+            let businessTitle = document.createElement('h4');
+            businessTitle.setAttribute('class', 'card-title');
+            businessTitle.textContent = parsedBusiness.name;
+            let businessStar = document.createElement('p');
+            businessStar.setAttribute('class', 'card-text');
+            for (let i = 0; i < Math.round(Number(parsedBusiness.stars)); i++) {
+                businessStar.textContent += '\u2605';
+            }
+            for (let i = Math.round(Number(parsedBusiness.stars)); i < 5; i++) {
+                businessStar.textContent += '\u2606';
+            }
+            let businessDetail = document.createElement('a');
+            businessDetail.setAttribute('href', 'business/detail/' + JSON.parse(parsedResponse.Business)[0].pk);
+            businessDetail.setAttribute('class', 'btn btn-primary');
+            businessDetail.textContent = 'Details';
+            titleBlock.appendChild(businessTitle);
+            titleBlock.appendChild(businessStar);
+            titleBlock.appendChild(businessDetail);
+
+            let businessAttributes = document.createElement('ul');
+            businessAttributes.setAttribute('class', 'list-group list-group-flush');
+            let businessAddress = document.createElement('li');
+            businessAddress.setAttribute('class', 'list-group-item');
+            businessAddress.textContent = parsedBusiness.address + ', ' + parsedBusiness.city + ', ' + parsedBusiness.state + ' - ' + parsedBusiness.postal_code;
+            let businessCategory = document.createElement('li');
+            businessCategory.setAttribute('class', 'list-group-item');
+            for (let i = 0; i < parsedCategory.length; i++) {
+            	businessCategory.appendChild(document.createTextNode(parsedCategory[i].fields.category));
+            	businessCategory.appendChild(document.createElement('br'));
+        	}
+        	if (parsedHour.length !== 0) {
+                let businessHours = document.createElement('li');
+                businessHours.setAttribute('class', 'list-group-item');
+                for (let i = 0; i < parsedHour.length; i++) {
+            		businessHours.appendChild(document.createTextNode(parsedHour[i].fields.hours));
+            		businessHours.appendChild(document.createElement('br'));
+        		}
+                businessAttributes.appendChild(businessHours);
+            }
+			businessAttributes.appendChild(businessAddress);
+			businessAttributes.appendChild(businessCategory);
 
 			panel.appendChild(titleBlock);
 			panel.appendChild(businessAttributes);
 		}
 
-		function queryBusinesses(bounds) {
-			console.log(JSON.stringify(bounds));
-			var response =
-			'[ \
-				{ \
-					"id": "1", \
-					"name": "Garaje", \
-					"address": "475 3rd St", \
-					"city": "Chicago", \
-					"state": "IL", \
-					"postal code": "94107", \
-					"latitude": 41.850033, \
-					"longitude": -87.6500523, \
-					"stars": 4.5, \
-					"review_count": 1198 \
-				}, \
-				{ \
-					"id": "2", \
-					"name": "Garaje1", \
-					"address": "475 3rd St", \
-					"city": "Chicago", \
-					"state": "IL", \
-					"postal code": "94107", \
-					"latitude": 41.851033, \
-					"longitude": -87.6510523, \
-					"stars": 4.5, \
-					"review_count": 1198 \
-				}, \
-				{ \
-					"id": "3", \
-					"name": "Garaje2", \
-					"address": "475 3rd St", \
-					"city": "Chicago", \
-					"state": "IL", \
-					"postal code": "94107", \
-					"latitude": 41.852033, \
-					"longitude": -87.6520523, \
-					"stars": 4.5, \
-					"review_count": 1198 \
-				}, \
-				{ \
-					"id": "4", \
-					"name": "Garaje3", \
-					"address": "475 3rd St", \
-					"city": "Chicago", \
-					"state": "IL", \
-					"postal code": "94107", \
-					"latitude": 41.853033, \
-					"longitude": -87.6530523, \
-					"stars": 4.5, \
-					"review_count": 1198 \
-				} \
-			]';
-			rendering(response, bounds);
-		}
-
 		function highlightMarker(id) {
-			console.log("listen id: " + id);
+			//console.log("listen id: " + id);
 			clearHighlight();
 			var panel = document.getElementById('bid:'+id);
 			if (panel) {
@@ -328,7 +276,7 @@ var map;
 			// add new markers into existing ones
 			for (var [id, marker] of newMarkers) {
 				if (!markers.has(id)) {
-					console.log("marker id: " + id);
+					//console.log("marker id: " + id);
 					markers.set(id, marker);
 					marker.setVisible(true);
 					markerCluster.addMarker(marker);

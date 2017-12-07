@@ -31,22 +31,15 @@ def queryBusinessPreview(request):
     hour = Hours.objects.filter(business=business)
 
     business = serializers.serialize('json', business.all())
-
-    if not category.exists():
-        category = {'category', 'unknown'}
-    else:
-        category = serializers.serialize('json', category.all(), fields=('category', ))
-
-    if not hour.exists():
-        hour = {'hours': 'unknown'}
-    else:
-        hour = serializers.serialize('json', hour.all(), fields=('hours', ))
+    category = serializers.serialize('json', category.all(), fields=('category', ))
+    hour = serializers.serialize('json', hour.all(), fields=('hours', ))
 
     response = {'Business': business, 'Category': category, 'Hour': hour}
     print(response)
     return HttpResponse(json.dumps(response), content_type='application/json')
 
 def queryBusinessDetails(request):
+
     return
 
 def tripInsert(request):
